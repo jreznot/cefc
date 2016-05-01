@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply from: 'http://plugins.jasoft.fi/vaadin.plugin'
+
+allprojects {
+    group = 'org.strangeway.cefc'
+    version = '0.1'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'src'
+            srcDir 'cef/win64'
+        }
+    }
+    test {
+        java {
+            srcDir 'test'
+        }
+        resources {
+            srcDir 'test'
+        }
+    }
+}
+
+dependencies {
+    compile 'org.eclipse.jetty:jetty-server:9.3.8.v20160314'
+    compile 'org.eclipse.jetty:jetty-webapp:9.3.8.v20160314'
+    compile files('cef/gluegen-rt.jar')
+    compile files('cef/gluegen-rt-natives-windows-amd64.jar')
+    compile files('cef/jcef.jar')
+    compile files('cef/jogl-all.jar')
+    compile files('cef/jogl-all-natives-windows-amd64.jar')
+}
+
+applicationName = 'cefc'
+mainClassName = 'org.strangeway.cefc.CefcLauncher'
+
+webAppDirName = 'web'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+javadoc.enabled = false
+vaadinJavadocJar.enabled = false
+vaadinSourcesJar.enabled = false
+vaadinUpdateAddonStyles.enabled = false
+vaadinUpdateWidgetset.enabled = false
+
+vaadin {
+    debug = true
+    version = '7.6.5'
+
+    plugin {
+        themesDirectory = 'web/VAADIN/themes'
+    }
+}
